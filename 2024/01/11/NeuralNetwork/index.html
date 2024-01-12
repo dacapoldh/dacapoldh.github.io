@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>对于《Python 神经网络编程》的学习记录 | Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="神经网络是如何工作的（介绍神经网络的相关概念）从线性关系的预测器开始 （Y &#x3D; CX+B)随机选择系数C，利用误差值来指导我们得到新的C的猜测值。那么如何使用误差来指导C的改变值呢？ 设想一下，如果只是用误差的数值来指示调整的方向，会出现小误差引发大调整，过犹不及。 所以如果值越来越接近正确答案，即误差越来越小，我们就无需做大的调整，避免得到超纲的调整。 从预测器到分类器 由于是分类器，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对于《Python 神经网络编程》的学习记录">
+<meta property="og:url" content="http://example.com/2024/01/11/NeuralNetwork/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="神经网络是如何工作的（介绍神经网络的相关概念）从线性关系的预测器开始 （Y &#x3D; CX+B)随机选择系数C，利用误差值来指导我们得到新的C的猜测值。那么如何使用误差来指导C的改变值呢？ 设想一下，如果只是用误差的数值来指示调整的方向，会出现小误差引发大调整，过犹不及。 所以如果值越来越接近正确答案，即误差越来越小，我们就无需做大的调整，避免得到超纲的调整。 从预测器到分类器 由于是分类器，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-01-11T15:55:16.000Z">
+<meta property="article:modified_time" content="2024-01-11T16:07:05.515Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="神经网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/01/11/NeuralNetwork/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '对于《Python 神经网络编程》的学习记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-12 00:07:05'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Hexo"><span class="site-name">Hexo</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">对于《Python 神经网络编程》的学习记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-01-11T15:55:16.000Z" title="Created 2024-01-11 23:55:16">2024-01-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-01-11T16:07:05.515Z" title="Updated 2024-01-12 00:07:05">2024-01-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="对于《Python 神经网络编程》的学习记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="神经网络是如何工作的（介绍神经网络的相关概念）"><a href="#神经网络是如何工作的（介绍神经网络的相关概念）" class="headerlink" title="神经网络是如何工作的（介绍神经网络的相关概念）"></a>神经网络是如何工作的（介绍神经网络的相关概念）</h1><h2 id="从线性关系的预测器开始-（Y-CX-B"><a href="#从线性关系的预测器开始-（Y-CX-B" class="headerlink" title="从线性关系的预测器开始 （Y &#x3D; CX+B)"></a>从线性关系的预测器开始 （Y &#x3D; CX+B)</h2><p>随机选择系数C，利用误差值来指导我们得到新的C的猜测值。那么如何使用误差来指导C的改变值呢？</p>
+<p>设想一下，如果只是用误差的数值来指示调整的方向，会出现小误差引发大调整，过犹不及。</p>
+<p>所以如果值越来越接近正确答案，即误差越来越小，我们就无需做大的调整，避免得到超纲的调整。</p>
+<h2 id="从预测器到分类器"><a href="#从预测器到分类器" class="headerlink" title="从预测器到分类器"></a>从预测器到分类器</h2><p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401111734720.png"></p>
+<p>由于是分类器，我们并不希望直线穿过点，而是在直线上或下方。因此期望值要略高或略低于点。</p>
+<p>误差E &#x3D; 期望值T - 实际输出值y。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401111741093.png" alt="image-20240111174141797"></p>
+<p>根据误差值E来计算出A要调整多少。δA &#x3D; E&#x2F;X</p>
+<p>每一次调整会使直线与最后一次的训练样本非常比配，而抛弃了所有先前训练样本的学习结果。所以要对每一次学习进行适度改进，即添加<strong>学习率</strong>。在预测器中，也是小心翼翼的调整参数C，使其只是实际误差值的几分之几。</p>
+<p><strong>δA &#x3D; L（E&#x2F;X)</strong></p>
+<p>对于学习率L的添加调整了改进速率，这样单一的训练样本就不能主导整个训练过程。同时由于真实世界的训练样本会充满噪声和错误，适度更新有助于限制这样错误样本的影响。</p>
+<p>如果数据本身不是由单一线性过程支配，那么一个简单的线性分类器就不能对数据进行划分。例如逻辑XOR。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112025506.png" alt="image-20240111202356932"></p>
+<p>解决方法很容易，就是使用多个线性分类器来划分单一直线无法分离的数据。</p>
+<h2 id="从观察神经元开始"><a href="#从观察神经元开始" class="headerlink" title="从观察神经元开始"></a>从观察神经元开始</h2><p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112025950.png" alt="image-20240111202524908"></p>
+<p>计算机善于计算，而对于损坏和不完全的信号，人脑具有难以置信的弹性。</p>
+<p>神经元从树突接收电信号，在终端发出电信号。和我们先前观察的分类或预测的机器相同，也是接收一个输入，进行一些处理，然后弹出一个输出。</p>
+<p>那么我们可以将神经元的工作机制表示为线性函数吗？</p>
+<p>观察表明，在接收刺激时，神经元不会立即反应，而是会抑制输入，直到输入增强，强大到可以触发输出。实际上这样是有道理的——神经元不希望传递微小的信号，而是传递有意识的明显的信号。</p>
+<p>这也就引出了<strong>阶跃函数</strong> 指<strong>函数值突然发生跳变的函数</strong> ，可以用来表示神经元的<strong>阈值</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112034758.png" alt="image-20240111203424724"></p>
+<p>改进函数使其相对平滑</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112035285.png" alt="image-20240111203504252"></p>
+<p><strong>sigmoid函数</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112038824.png" alt="image-20240111203825804"></p>
+<p>每个神经元接收来自其之前的多个神经元的输入，如果神经元被激发了，它也同时提供信号给更多的神经元。</p>
+<h2 id="人工神经网络"><a href="#人工神经网络" class="headerlink" title="人工神经网络"></a>人工神经网络</h2><p>由相互连接的神经元组成的生物大脑是人工神经网络的灵感来源。可以说度量神将元之间相互连接的权重值w就是人工神经网络的根本。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112042595.png" alt="image-20240111204258530"></p>
+<p>这是一个简单的三层人工神经网络，你可以会疑问为什么要这样连接，有没有其他的连接方式？</p>
+<p>我们不采用其他的连接方式有两个原因：第一是这种一致的连接形式事实上可以相对容易的编码成计算机指令，第二是神经网络的<strong>学习</strong>过程会弱化这些实际上不需要的连接，也就是将连接的权重趋近于0。</p>
+<h2 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h2><h4 id="在神经网络中追踪信号"><a href="#在神经网络中追踪信号" class="headerlink" title="在神经网络中追踪信号"></a>在神经网络中追踪信号</h4><p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112055801.png" alt="image-20240111205549738"></p>
+<p>对于某个节点，首先要接收上一层节点的输入并和<strong>权重</strong>相乘得到总和输入值，在经过阈值函数的处理得到输出。</p>
+<p>从结构观察，自然而然的使用<strong>矩阵</strong>来进行辅助计算。</p>
+<p>如下所示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112103371.png" alt="image-20240111210351303"></p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112103278.png" alt="image-20240111210334244" style="zoom:67%;" />
+
+<p>矩阵运算对于神经网络计算实现的优化不言而喻。</p>
+<p><strong>X &#x3D; W*I</strong>，此处I是输入矩阵，W是权重矩阵，X是组合调节后的信号，也就是输出给下一层的结果矩阵。再使用激活函数来应用阈值，因此，来自本层的最终输出是：<strong>O &#x3D; sigmoid（x)</strong></p>
+<p>对于每一层的信号我们都<strong>“一视同仁“</strong>,即组合输入信号，应用连接权重调节输入信号，应用激活函数，生成输出信号。并最终得到了最终输出层的输出信号。</p>
+<p>接下来我们就要使用神经网络的输出值与训练样本中的输出值进行比较，进而改进神经网络的输出值。</p>
+<h4 id="如何利用误差来改进"><a href="#如何利用误差来改进" class="headerlink" title="如何利用误差来改进"></a>如何利用误差来改进</h4><p>输出和误差是多个节点共同作用的结果，如何利用误差来调整连接的权重呢？</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112136527.png" alt="image-20240111213634468"></p>
+<p>一种思想是在所有造成误差的节点中平分误差，另一种思想是为较大连接权重的连接分配更多的误差。</p>
+<p>多个输出节点反向传播误差，也就是多个节点都有误差，我们只是重复第一个节点所做的事情，<strong>跨越造成误差的多条链接，按照权重比例，分割输出节点的误差</strong>。因为<strong>两组链接之间不存在依赖关系</strong>。</p>
+<p>对于隐藏层的节点，<strong>我们没有目标值或所希望的输出值，我们在训练数据中只有最终节点的目标值</strong>。我们利用隐藏层想下一层的连接，<strong>沿着各个链接分割输出误差并重组误差，形成了这个节点的误差</strong>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112157101.png" alt="image-20240111215720052"></p>
+<p>同样的，使用矩阵的乘法来进行运算。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112158574.png" alt="image-20240111215825522"></p>
+<p>去掉归一化分母，可以表示为：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112223761.png" alt="image-20240111222339718"></p>
+<p>实践证明，去除归一化因子，与我们先前相对复杂的方式一样行之有效。而且如果反馈的误差过大或过小，在下一次学习迭代中，网络也可以自行纠正。</p>
+<h4 id="实际上我们如何更新权重"><a href="#实际上我们如何更新权重" class="headerlink" title="实际上我们如何更新权重"></a>实际上我们如何更新权重</h4><p>我们的目的是使神经网络的<strong>总误差函数E</strong>最小。</p>
+<p>神经网络的<strong>输出</strong>是一个极其复杂困难的函数，这个函数具有许多参数影响到其输出的链接权重。</p>
+<p>我们可以使用<strong>梯度下降法</strong>，计算出正确的权重吗？只要我们选择了合适的误差函数，这是完全可以的。</p>
+<p>对于误差函数的选择要考虑以下几点：首先要防止符号抵消，其次要满足使用。通过第一条规则我们可以使用<strong>绝对值和平方差</strong>来表示误差，通过第二条规则我们要考虑<strong>梯度下降法</strong>，函数尽量<strong>平滑</strong>。</p>
+<p>在由多个权重参数组成的误差公式中，误差是一个曲面，我们使用梯度下降法来实现<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112311287.png" alt="image-20240111231136261" style="zoom: 33%;" /></p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112309278.png" alt="image-20240111230915219" style="zoom:67%;" />
+
+<p>​	<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112333462.png" alt="image-20240111233314386"></p>
+<p>这个表达式是为了优化<strong>隐藏层j和输出层k</strong>之间的权重Wjk。</p>
+<p>第一部分，非常简单，就是(目标值-实际值)，我们对此已经很清楚了。在sigmoid 中的求和表达式也很简单，就是进入最后一层节点的信号，我们可以称之为ik，这样它看起来比较简单。这是应用激活函数之前，进入节点的信号。最后一部分是前一隐藏层节点i的输出。</p>
+<p>可以运用刚才的解释，为输入层i和隐藏层j之间的权重集构建新的表达式。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112339906.png" alt="image-20240111233917872"></p>
+<p>第一部分的(目标值-实际值)误差，现在变成了隐藏层节点中重组的向后传播误差，正如在前面所看到的那样。我们称之为ej。sigmoid部分可以保持不变，但是内部的求和表达式指的是前一层，因此求和的范围是所有由权重调节的进入隐藏层节点i的输入。我们可以称之为ij。最后一部分是第一层节点的输出oi，这碰巧是输入信号。</p>
+<p>记住<strong>权重改变方向和梯度方向相反</strong>。斜率为正就要减，为负就要加</p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112343407.png" alt="image-20240111234353358" style="zoom:50%;" />
+
+<p>所以（α是学习因子）</p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112344652.png" alt="image-20240111234443621" style="zoom:67%;" />
+
+<p>使用矩阵</p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112346935.png" alt="image-20240111234636886" style="zoom:67%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112346632.png" alt="image-20240111234644603" style="zoom:50%;" />
+
+<h4 id="一些细节（输入输出和如何随机初始化权重）"><a href="#一些细节（输入输出和如何随机初始化权重）" class="headerlink" title="一些细节（输入输出和如何随机初始化权重）"></a>一些细节（输入输出和如何随机初始化权重）</h4><p>观察sigmoid函数，在输入较大时拥有较小的梯度，减小了学习能力，也就是饱和神经网络，这意味着我们应该保持较小的输入。但由于计算机精度问题，处理较小值也会有麻烦。</p>
+<p>一个好的建议是重新调整输入值，将其范围控制在0.0到1.0。输入0会将o设置为0，这样权重更新表达式就会等于0，从而造成学习能力<br>的丧失，因此在某些情况下，我们会将此输入加上一个小小的偏移，如0.01，避免输入0带来麻烦。</p>
+<p>在输出时，常见的使用范围为0.0<del>1.0，但是由于0.0和1.0这两个数也不可能是目标值，并且有驱动产生过大的权重的风险，因此一些人也使用0.01</del>099的范围。</p>
+<p>在随机初始化权重时，采用概率分布中进行采样的思想，从均值为0、标准方差等于节点传入链接数量平方根倒数的正态分布中进行采样。</p>
+<img src="https://cdn.jsdelivr.net/gh/dacapoldh/image/blog/202401112355972.png" alt="img" style="zoom:33%;" />
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/01/11/NeuralNetwork/">http://example.com/2024/01/11/NeuralNetwork/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/01/10/artical-titile/" title="artical titile"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">artical titile</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%88%E4%BB%8B%E7%BB%8D%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">神经网络是如何工作的（介绍神经网络的相关概念）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E7%BA%BF%E6%80%A7%E5%85%B3%E7%B3%BB%E7%9A%84%E9%A2%84%E6%B5%8B%E5%99%A8%E5%BC%80%E5%A7%8B-%EF%BC%88Y-CX-B"><span class="toc-number">1.1.</span> <span class="toc-text">从线性关系的预测器开始 （Y &#x3D; CX+B)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E9%A2%84%E6%B5%8B%E5%99%A8%E5%88%B0%E5%88%86%E7%B1%BB%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">从预测器到分类器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%A7%82%E5%AF%9F%E7%A5%9E%E7%BB%8F%E5%85%83%E5%BC%80%E5%A7%8B"><span class="toc-number">1.3.</span> <span class="toc-text">从观察神经元开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.4.</span> <span class="toc-text">人工神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.5.</span> <span class="toc-text">如何工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E8%BF%BD%E8%B8%AA%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">在神经网络中追踪信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%E8%AF%AF%E5%B7%AE%E6%9D%A5%E6%94%B9%E8%BF%9B"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">如何利用误差来改进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%B8%8A%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%E6%9D%83%E9%87%8D"><span class="toc-number">1.5.0.3.</span> <span class="toc-text">实际上我们如何更新权重</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82%EF%BC%88%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%A6%82%E4%BD%95%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9D%83%E9%87%8D%EF%BC%89"><span class="toc-number">1.5.0.4.</span> <span class="toc-text">一些细节（输入输出和如何随机初始化权重）</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/11/NeuralNetwork/" title="对于《Python 神经网络编程》的学习记录">对于《Python 神经网络编程》的学习记录</a><time datetime="2024-01-11T15:55:16.000Z" title="Created 2024-01-11 23:55:16">2024-01-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/10/artical-titile/" title="artical titile">artical titile</a><time datetime="2024-01-10T12:52:49.000Z" title="Created 2024-01-10 20:52:49">2024-01-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/10/name/" title="name">name</a><time datetime="2024-01-10T10:01:33.000Z" title="Created 2024-01-10 18:01:33">2024-01-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/10/hello-world/" title="Hello World">Hello World</a><time datetime="2024-01-10T09:28:35.218Z" title="Created 2024-01-10 17:28:35">2024-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
